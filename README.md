@@ -6,11 +6,11 @@ Welcome to my portfolio! This repository contains my **Packet Tracer labs and no
 
 ### 🔹 Packet Tracer Labs  
 Contains `.pkt` files demonstrating various networking concepts:  
-- [VLAN Configuration](PacketTracer-Labs/VLAN_Config.pkt)  
-- [Inter-VLAN Routing](PacketTracer-Labs/InterVLAN_Routing.pkt)  
-- [Static & Dynamic Routing](PacketTracer-Labs/Static_Dynamic_Routing.pkt)  
-- [ACL & Security Configurations](PacketTracer-Labs/ACL_Security.pkt) 
- 
+- Project 1 - Simple Network (PacketTracer-Labs/VLAN_Config.pkt)  
+- Project 2 - Small Business (PacketTracer-Labs/InterVLAN_Routing.pkt)  
+- Project 3 - University Network (PacketTracer-Labs/Static_Dynamic_Routing.pkt)  
+- Project 4 - Hotel Network(PacketTracer-Labs/ACL_Security.pkt) 
+- Project 5 - Company Network
 ## 📌 How to Use  
 1. Download `.pkt` files and open them in **Cisco Packet Tracer**.  
 2. Review the notes for explanations and configurations.  

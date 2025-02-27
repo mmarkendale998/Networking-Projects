@@ -1,0 +1,193 @@
+Network Address : 192.168.1.0
+
+Subnets required = 3
+
+2^n = Number of subnets = 2^n=3 
+
+N = 2
+
+255.255.255.255
+
+11111111.11111111.11111111.11000000 = 2 bits borrowed as shown above by 'N' - Give me the /26 notation on the IP addresses
+
+255.255.255.192
+
+64 addresses available per subnet
+
+
+HR Department subnet below
+
+Mask = 255.255.255.192
+Network ID = 192.168.1.0
+Range of valid host IP addresses = 192.168.1.1 - 192.168.1.62
+Broadcast address = 192.168.1.63
+
+
+
+Customer Service subnet below
+
+Mask = 255.255.255.192
+Network ID = 192.168.1.64
+Range of valid IP addresses = 192.168.1.65 - 192.168.1.126
+Broadcast address = 192.168.1.127
+
+
+
+Admin / IT subnet below
+
+Mask = 255.255.255.192
+Network ID = 192.168.1.128
+Range of valid IP addresses = 192.168.1.129 - 192.168.1.190
+Broadcast address = 192.168.1.191
+
+
+
+
+Configuring the VLANs
+
+*From the switch*
+
+HR Department
+FA0/1 - PC1  FA0/2 - Printer  FA0/8 - Wireless Access Point
+
+Configure range across all interfaces - int range fa0/1-8
+
+enable
+conf t
+example for single port - int range fa0/1
+switch port mode access
+switchport access vlan 10
+
+do this for all fast ethernets connected to the switch and add to correct vlans
+
+do wr - creates config
+
+exit
+do sh start - shows config created to confirm set up
+
+
+
+Configure Access points
+
+Config
+Port 1
+Change SSID
+Set WPA2-PSK authentication, then set password
+Encryption type - AES
+
+
+
+Configure trunk port to router to allow passage for multiple VLANS
+
+From the switch
+enable
+conf t
+(In this set up) - int fa0/7
+switchport mode trunk
+do wr
+
+
+
+Configure router
+
+Router
+enable
+conf t
+int gig0/0
+no sh
+do wr
+
+This changes router state to up
+
+
+Configure inter VLAN routing
+from the router
+
+Router>enable
+Router#conf t
+
+Router(config)#int gig0/0
+Router(config-if)#no sh
+
+Router(config-if)#
+%LINK-5-CHANGED: Interface GigabitEthernet0/0, changed state to up
+
+%LINEPROTO-5-UPDOWN: Line protocol on Interface GigabitEthernet0/0, changed state to up
+do wr
+Building configuration...
+[OK]
+Router(config-if)#exit
+Router(config)#int gig0/0.10
+Router(config-subif)#
+%LINK-5-CHANGED: Interface GigabitEthernet0/0.10, changed state to up
+
+%LINEPROTO-5-UPDOWN: Line protocol on Interface GigabitEthernet0/0.10, changed state to up
+enc
+% Incomplete command.
+Router(config-subif)#encapsulation dot1Q
+% Incomplete command.
+Router(config-subif)#encapsulation dot1Q 10
+Router(config-subif)#ip address 192.168.1.1 255.255.255.192
+Router(config-subif)#exit
+Router(config)#int gig0/0.20
+Router(config-subif)#
+%LINK-5-CHANGED: Interface GigabitEthernet0/0.20, changed state to up
+
+%LINEPROTO-5-UPDOWN: Line protocol on Interface GigabitEthernet0/0.20, changed state to up
+encapsulation dot1q 20
+Router(config-subif)#ip address 192.168.1.65 255.255.255.192
+Router(config-subif)#do wr
+Building configuration...
+[OK]
+Router(config-subif)#exit
+Router(config)#int gig0/0.30
+Router(config-subif)#
+%LINK-5-CHANGED: Interface GigabitEthernet0/0.30, changed state to up
+
+%LINEPROTO-5-UPDOWN: Line protocol on Interface GigabitEthernet0/0.30, changed state to up
+encapsulation dot1q 30
+Router(config-subif)#encapsulation dot1q 30
+Router(config-subif)#ip address 192.168.1.129 255.255.255.192
+Router(config-subif)#do wr
+Building configuration...
+[OK]
+Router(config-subif)#exit
+
+
+
+Configure DHCP Server
+
+Enable service on router
+enable
+conf t
+service dhcp
+
+Create DHCP Pools
+ip dhcp HR-Pool
+
+Router(config)#ip dhcp pool HR-Pool
+Router(dhcp-config)#network 192.168.1.0 255.255.255.192
+Router(dhcp-config)#default-router 192.168.1.1
+Router(dhcp-config)#dns-server 192.168.1.1
+Router(dhcp-config)#domain-name HR.com
+Router(dhcp-config)#exit
+
+Router(config)#ip dhcp pool CS-Pool
+Router(dhcp-config)#network 192.168.1.64 255.255.255.192
+Router(dhcp-config)#default-router 192.168.1.65
+Router(dhcp-config)#dns-server 192.168.1.65
+Router(dhcp-config)#domain-name CS.com
+Router(dhcp-config)#exit
+
+Router(config)#ip dhcp pool AdminIT-Pool
+Router(dhcp-config)#network 192.168.1.128 255.255.255.192
+Router(dhcp-config)#default-router 192.168.1.129
+Router(dhcp-config)#dns-server 192.168.1.129
+Router(dhcp-config)#domain-name AdminIT.com
+
+exit
+
+do wr
+
+change all devices to dhcp - should pick up addresses via dhcp
+

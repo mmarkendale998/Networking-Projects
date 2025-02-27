@@ -14,9 +14,8 @@ Contains `.pkt` files demonstrating various networking concepts:
 
 
 ### 🔹 Notes
-- Subnetting_Guide.md
-- Routing_Protocols.md
-- Troubleshooting_Checklist.md
+- [Project 1 - Notes](Project%201%20-%20Simple%20Network%20-%20Subnetting%20-%20Notes.txt)
+- [Project 2 - Notes](Project%202%20-%20Small%20Business.txt)
 
 
 ## 🚀 How to Use  

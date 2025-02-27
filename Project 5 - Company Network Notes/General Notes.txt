@@ -1,0 +1,52 @@
+int vlan 10
+no sh
+ip add 172.16.1.1 255.255.255.128
+ip helper-address 172.16.3.130
+exit
+
+int vlan 20
+no sh
+ip add 172.16.1.129 255.255.255.128
+ip helper-address 172.16.3.130
+exit
+
+int vlan 30
+no sh
+ip add 172.16.2.1 255.255.255.128
+ip helper-address 172.16.3.130
+exit
+
+int vlan 40
+no sh
+ip add 172.16.2.129 255.255.255.128
+ip helper-address 172.16.3.130
+exit
+
+
+int vlan 50
+no sh
+ip add 172.16.3.1 255.255.255.128
+ip helper-address 172.16.3.130
+exit
+
+int vlan 60
+no sh
+ip add 172.16.3.129 255.255.255.240
+ip helper-address 172.16.3.130
+exit
+
+
+
+
+COR2-R1(config)#ip nat inside source list 1 int se0/1/0 overload
+ip nat inside source list 1 int se0/1/1 overload
+
+access-list 1 permit 172.16.1.0 0.0.0.127
+access-list 1 permit 172.16.1.128 0.0.0.127
+access-list 1 permit 172.16.2.0 0.0.0.127
+access-list 1 permit 172.16.2.128 0.0.0.127
+access-list 1 permit 172.16.3.0 0.0.0.127
+access-list 1 permit 172.16.3.128 0.0.0.15
+
+ip route 0.0.0.0 0.0.0.0 se0/1/0
+ip route 0.0.0.0 0.0.0.0 se0/1/1 70

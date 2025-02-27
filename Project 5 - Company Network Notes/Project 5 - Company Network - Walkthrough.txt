@@ -1,0 +1,282 @@
+Project 5 - Company Network - Walkthrough
+
+
+X4 ROUTERS in total
+
+x2 2911 core routers
+x2 2811 ISP routers
+
+Connect both core routers to both isp routers using serial dce cables
+
+Connect both core switches to both core routers
+
+Connect all layer 2 switches to both layer 3 switches
+
+THIS IS FOR REDUNDANCY PURPOSES
+
+Connect all end points to layer 2 switches
+
+Power on the layer 3 switches by adding power supplies
+
+Turn on routers interfaces
+
+int se0/1/0
+no shutdown
+
+
+Layer 2 switches - Configure Hostname, Console password, enable password, banner message, disable ip domain lookup
+
+EN
+CONF T
+hostname Core-R2
+banner motd #No Unauthorised Access#
+no ip domain lookup
+line console 0
+password cisco
+login
+exit
+enable password cisco
+service password-encryption
+do wr
+
+
+Configure SSH on Layer 3 Switches and Core Routers
+
+Make sure switch has a hostname
+set up ip domain name
+
+ip domain name matt.com
+username admin password cisco
+crypto key generate rsa
+
+1024
+
+line vty 0 15
+login local
+transport input ssh
+
+do wr
+
+Configure SSH version on layer 3 switches and core routers
+
+ip ssh version 2
+do wr
+
+
+
+Configure VLANS for departments
+
+first configure trunk ports connecting to layer 3 switch
+
+en
+conf t
+int range fa0/1-2
+switchport mode trunk
+
+Configure Layer 2 switch vlans
+
+vlan 10
+name Sales
+exit
+int range fa0/3-24
+switchport mode access 
+switchport access vlan 10
+exit 
+do wr
+
+assign gigabit ports to unused vlan
+
+en
+conf t
+vlan 99
+name GIG
+exit
+int range gig0/1-2
+switchport mode access
+switchport access vlan 99
+
+
+Configure switchport security to finance department
+
+
+int range fa0/3-24
+switchport port-security maximum 1
+switchport port-security violation shutdown
+exit
+do wr
+
+
+Configure trunk ports and vlans on Layer 3 Switches
+
+int range gig1/0/3-8
+switchport mode trunk
+
+vlan 10
+name Sales
+
+
+Assign IP address between Layer 3 switch and Routers
+
+Convert interfaces to layer 3 interfaces
+
+int range gig1/0/1-2
+no switchport
+exit
+do wr
+
+int gig1/0/1
+ip address 172.16.3.145 255.255.255.252
+exit
+do wr
+
+router side
+int gig0/0
+ip address 172.16.3.146 255.255.255.252
+
+
+Router to ISP
+
+configure clockrates
+int se0/1/1
+clock rate 64000
+
+
+Enable IP Routing service on Layer 3 switches and OSPF
+
+ip routing
+
+router ospf 10
+router-id 3.3.3.3
+network 172.16.1.0 0.0.0.127 area 0
+#repeat for all#
+
+Layer3-SW-02(config)#router ospf 10
+Layer3-SW-02(config-router)#network 172.16.1.0 0.0.0.127 area 0
+Layer3-SW-02(config-router)#network 172.16.1.0 0.128.0.127 area 0
+OSPF: Invalid address/mask combination (discontiguous mask)
+Layer3-SW-02(config-router)#network 172.16.1.128 0.0.0.127 area 0
+Layer3-SW-02(config-router)#network 172.16.2.0 0.0.0.127 area 0
+Layer3-SW-02(config-router)#network 172.16.2.128 0.0.0.127 area 0
+Layer3-SW-02(config-router)#network 172.16.3.0 0.0.0.127 area 0
+Layer3-SW-02(config-router)#network 172.16.3.128 0.0.0.143 area 0
+OSPF: Invalid address/mask combination (discontiguous mask)
+Layer3-SW-02(config-router)#network 172.16.3.128 0.0.0.15 area 0
+Layer3-SW-02(config-router)#exit
+Layer3-SW-02(config)#do wr
+
+Router level
+
+router ospf 10
+
+router-id 3.3.3.3
+
+network 172.16.3.148 0.0.0.3 area 0
+network 172.16.3.156 0.0.0.3 area 0
+network 195.136.17.8 0.0.0.3 area 0
+network 195.136.17.12 0.0.0.3 area 0
+
+do wr
+exit
+
+
+
+Assign static addresses to servers
+
+DHCP server set up
+services
+enable dhcp
+
+add ip address ranges and subnets masks
+
+
+Set up DNS server
+
+services - DNS - ON
+name www.matt.com
+
+
+set up inter vlan routing on layer 3 switches
+
+int vlan 10
+no sh
+ip add 172.16.1.1 255.255.255.128
+ip helper-address 172.16.3.10
+exit
+
+int vlan 20
+no sh
+ip add 172.16.1.129 255.255.255.128
+ip helper-address 172.16.3.10
+exit
+
+int vlan 30
+no sh
+ip add 172.16.2.1 255.255.255.128
+ip helper-address 172.16.3.10
+exit
+
+int vlan 40
+no sh
+ip add 172.16.2.129 255.255.255.128
+ip helper-address 172.16.3.10
+exit
+
+
+int vlan 50
+no sh
+ip add 172.16.3.1 255.255.255.128
+ip helper-address 172.16.3.10
+exit
+
+int vlan 60
+no sh
+ip add 172.16.3.129 255.255.255.240
+ip helper-address 172.16.3.10
+exit
+
+
+FAULT FOUND
+
+ALL VLANS UNABLE TO COMMUNICATE WITH DHCP
+
+IP HELPER ADDRESS WAS WRONG ON THE INTERFACES SET ON THE L3 SWITCH
+
+ADDRESS SHOULD OF BEEN 172.16.3.130
+
+
+Configure PAT + Access Control List on routers
+
+Core-R2(config)#access-list 1 permit 172.16.1.0 0.0.0.127
+Core-R2(config)#access-list 1 permit 172.16.1.128 0.0.0.127
+Core-R2(config)#access-list 1 permit 172.16.2.0 0.0.0.127
+Core-R2(config)#access-list 1 permit 172.16.2.128 0.0.0.127
+Core-R2(config)#access-list 1 permit 172.16.3.0 0.0.0.127
+Core-R2(config)#access-list 1 permit 172.16.3.128 0.0.0.15
+Core-R2(config)#
+Core-R2(config)#
+Core-R2(config)#do wr
+Building configuration...
+[OK]
+Core-R2(config)#int range gig0/0-1
+Core-R2(config-if-range)#ip nat inside
+Core-R2(config-if-range)#exit
+Core-R2(config)#int se0/1/0
+Core-R2(config-if)#ip nat outside
+Core-R2(config-if)#exit
+Core-R2(config)#int se0/1/1
+Core-R2(config-if)#ip nat outside
+Core-R2(config-if)#exit
+Core-R2(config)#do wr
+Building configuration...
+[OK]
+Core-R2(config)#
+Core-R2(config)#
+Core-R2(config)#ip nat inside source list 1 int se0/1/0 overload
+Core-R2(config)#ip nat inside source list 1 int se0/1/1 overload
+
+
+Configure default statis router
+
+
+ip route 0.0.0.0 0.0.0.0 se0/1/0
+ip route 0.0.0.0 0.0.0.0 se0/1/1 70

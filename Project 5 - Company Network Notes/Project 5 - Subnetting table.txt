@@ -1,0 +1,64 @@
+Project 5 - Subnetting table
+
+
+BASE NETWORK - 172.16.1.0
+
+
+Department - Sales
+#Network Address - 172.16.1.0
+#Subnet Mask - 255.255.255.128/25
+#Host Address Range - 172.16.1.0 - 172.16.1.126
+#Broadcast Address - 172.16.1.127
+
+
+Department - HR
+#Network Address - 172.16.1.128
+#Subnet Mask - 255.255.255.128/25
+#Host Address Range - 172.16.1.129 - 172.16.1.254
+#Broadcast Address - 172.16.1.255
+
+
+Department - Finance
+#Network Address - 172.16.2.0
+#Subnet Mask - 255.255.255.128/25
+#Host Address Range - 172.16.2.1 - 172.16.2.126
+#Broadcast Address - 172.16.2.127
+
+
+Department - Admin
+#Network Address - 172.16.2.128
+#Subnet Mask - 255.255.255.128/25
+#Host Address Range - 172.16.2.129 - 172.16.2.254
+#Broadcast Address - 172.16.2.255
+
+
+Department - IT
+#Network Address - 172.16.3.0
+#Subnet Mask - 255.255.255.128/25
+#Host Address Range - 172.16.3.1 - 172.16.3.126
+#Broadcast Address  - 172.16.3.127
+
+
+Department - Server Room
+#Network Address - 172.16.3.128
+#Subnet Mask - 255.255.255.240/28
+#Host Address Range - 172.16.3.129 - 172.16.3.142
+#Broadcast Address - 172.16.3.143
+
+
+Between Routers and Layer 3 switches
+
+No.                Network Address        Subnet Mask         Host Address Range               Broadcast Address
+-----------------------------------------------------------------------------------------------------------------------------
+R1- MLSW1     172.16.3.144       255.255.255.252     172.16.3.145 - 172.16.3.146     172.16.3.147
+R1- MLSW2     172.16.3.148       255.255.255.252     172.16.3.149 - 172.16.3.150     172.16.3.151
+R2- MLSW1     172.16.3.152       255.255.255.252     172.16.3.153 - 172.16.3.154     172.16.3.155
+R2- MLSW2     172.16.3.156       255.255.255.252     172.16.3.157 - 172.16.3.158     172.16.3.159
+
+
+IP Addresses between Routers and ISP's
+
+Public IP addresses 195.136.17.0/30, 195.136.17.4/30, 195.136.17.8/30 and 195.136.17.12/30
+
+
+

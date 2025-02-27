@@ -17,7 +17,7 @@ Contains `.pkt` files demonstrating various networking concepts:
 - [Project 1 - Notes](Project%201%20-%20Simple%20Network%20-%20Subnetting%20-%20Notes.txt)
 - [Project 2 - Notes](Project%202%20-%20Small%20Business.txt)
 - [Project 3 - Notes](Project%203%20-%20University%20Network.txt)
-- [Project 4 - Notes](Project%204%20-%20Hotel%20Network.txt)
+- [Project 4 - Notes](./Project%204%20-%20Hotel%20Network%20Notes)
 - [Project 5 - Notes](./Project%205%20-%20Company%20Network%20Notes)
 
 

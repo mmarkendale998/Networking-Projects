@@ -36,7 +36,9 @@ Each link contains quick videos of different configurations.
 - [Project 5 - Company Network](./Project%205%20-%20Company%20Network)
 
 
-## 🚀 How to Use  
+
+
+## How to Use  
 1. Click on any `.pkt` file to view it on GitHub.  
 2. Download the file using the **"Download"** button.  
 3. Open the file in **Cisco Packet Tracer**.  

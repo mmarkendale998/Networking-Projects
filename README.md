@@ -38,7 +38,7 @@ Contains `.pkt` files demonstrating various networking concepts:
  
   - ## Root Folders
 
-- [Project 4 - Hotel Network](./Networking-Projects/Project%204%20-%20Hotel%20Network)
+- [Project 4 - Hotel Network](./Project%204%20-%20Hotel%20Network)
 - [Project 5 - Company Network](./Networking-Projects/Project%205%20-%20Company%20Network)
 
 

@@ -32,13 +32,8 @@ Contains `.pkt` files demonstrating various networking concepts:
 ## Project 4 Videos
 
 - [Project 4 - Hotel Network](Project%204%20-%20Hotel%20Network)
-  - [Documents](./Project%204%20-%20Hotel%20Network/Documents)
-  - [Images](./Project%204%20-%20Hotel%20Network/Images)
-  - [Videos](./Project%204%20-%20Hotel%20Network/Videos)
- 
-  - ## Root Folders
 
-- [Project 4 - Hotel Network](./Project%204%20-%20Hotel%20Network)
+## Project 5 Videos
 - [Project 5 - Company Network](./Project%205%20-%20Company%20Network)
 
 

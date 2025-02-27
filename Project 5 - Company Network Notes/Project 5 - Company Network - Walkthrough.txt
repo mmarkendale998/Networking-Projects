@@ -275,7 +275,7 @@ Core-R2(config)#ip nat inside source list 1 int se0/1/0 overload
 Core-R2(config)#ip nat inside source list 1 int se0/1/1 overload
 
 
-Configure default statis router
+Configure default statics router
 
 
 ip route 0.0.0.0 0.0.0.0 se0/1/0

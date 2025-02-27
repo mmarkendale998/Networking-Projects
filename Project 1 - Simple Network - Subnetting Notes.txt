@@ -1,0 +1,31 @@
+Network Address - 192.168.40.0
+
+x2 Subnets
+
+2^n = No. of subnets = 2^n=2
+
+N = 1
+
+255.255.255.255
+
+11111111.11111111.11111111.10000000 = One bit borrowed as shown above by 'N' - Gives me the /25 notation on IP addresses
+
+255.255.255.128 = New subnet mask
+
+
+Main office subnet below
+
+Mask = 255.255.255.128
+Network ID = 192.168.40.0
+Range of valid host IP addresses = 192.168.40.1 - 192.168.40.126
+Broadcast Address = 192.168.40.127
+
+
+Finance office subnet below
+
+Mask = 255.255.255.128
+Network ID = 192.168.40.128
+Range of valid IP addresses = 192.168.40.129 - 192.168.40.254
+Broadcast address = 192.68.40.255
+
+Default gateway (Router) = 192.168.40.1

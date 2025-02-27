@@ -31,6 +31,10 @@ Contains `.pkt` files demonstrating various networking concepts:
 
 ## Project 4 Videos
 
+- [Project 4 - Hotel Network](Project%204%20-%20Hotel%20Network)
+  - [Documents](./Project%204%20-%20Hotel%20Network/Documents)
+  - [Images](./Project%204%20-%20Hotel%20Network/Images)
+  - [Videos](./Project%204%20-%20Hotel%20Network/Videos)
 
 ## 🚀 How to Use  
 1. Click on any `.pkt` file to view it on GitHub.  

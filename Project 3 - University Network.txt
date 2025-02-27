@@ -1,0 +1,181 @@
+Project 3 - University Network - https://www.youtube.com/watch?v=qIbhkmTB8Q8&list=PLvUOx2WG6R7PMM8UhMWevH75QzGyXOv4g&index=4    38:00
+
+Requirements:
+
+Create a network topology with the main components to support the following:
+
+Main campus: 
+Building A: Administrative staff in the departments of management, HR, and finance. The admin staff PCs are distributed in the building offices, and it is expected that they will share some networking equipment (use of VLANs is expected here). 
+The Faculty of Business is also situated in this building.  
+Building B: Faculty of Engineering and Computing and Faculty of Art and Design.  
+Building C: Students’ labs and IT department. The IT department hosts the University Web server and other servers.  
+
+- There is also an email server hosted externally on the cloud.  
+
+Smaller campus 
+Faculty of Health and Sciences (staff and students’ labs are situated on separate floors).  
+
+
+You will be expected to configure the core devices and few end devices to provide end-to-end connectivity and access to the internal servers and the external server. 
+
+Each department/faculty is expected to be on its own separate IP network.  
+The switches should be configured with appropriate VLANs and security settings.  
+RIPv2 will be used to provide routing for the routers in the internal network and static routing for the external server.  
+The devices in Building A, B, C will be expected to acquire dynamic IP addresses from a router-based DHCP server.  
+
+
+---------------------------------------------------------------------------------------------
+
+Notes of steps taken
+
+
+x3 Routers
+x2 Layer 3 switches
+
+All 3 routers connected via serial connections
+
+Add serial ports on physical routers
+
+- Connect to the routers CLI
+en
+conf t
+int #interfaces of cables# ser0/0/1
+no sh
+do wr
+exit
+
+- power up lines to switches
+
+en
+conf t
+int gig0/0
+no sh
+do wr
+exit
+
+- Serials between routers
+Configure clock rates to enable traffic to flow through the serial DCE cables
+en
+conf t
+int se0/1/1
+clock rate 64000
+
+-------------------------------------------------------------------------------------------------------------------------------------------------
+
+Configuring VLANs and all layer 2 switches
+
+en
+conf t
+int range fa0/1-24
+switchport mode access
+switchport access vlan 10
+do wr
+exit
+
+Run this on all layer 2 switches for their respective VLANs
+
+Run same commands for layer 3 switches to separate all buildings into vlans, same as layer 2
+
+--------------------------------------------------------------------------------------------------------------------------------------------------
+
+Set trunk ports so sites can communicate
+
+Layer 3 switches
+
+en
+conf t
+int gig1/0/### 
+switchport mode trunk
+do wr
+exit
+
+
+----------------------------------------------------------------------------------------------------------------------------------------------------
+
+Configure IP addresses to interfaces between routers following IP address AT BOTH ENDS
+
+en
+conf t
+int se0/1/0
+ip address 10.10.10.1 255.255.255.252
+exit
+do wr
+
+same for all routers, ip address must be set at both ends of the serial cable
+
+configure ip address on email server
+
+access the ip configuration and set 20.0.0.2
+
+ping gateway to make sure
+
+ping 20.0.0.1
+
+----------------------------------------------------------------------------------------------------------------------------------------------------
+
+Configure inter vlan routing
+
+access the switch and create subinterfaces
+
+en
+conf t
+int gig0/0.90
+encapsulation dot1q 90
+ip address 192.168.9.1 255.255.255.0
+exit
+
+same set of commands per subnet
+
+eg
+
+vlan 100
+en
+conf t
+int gig0/0.100
+encapsulation dot1q 100
+ip address 192.168.10.1 255.255.255.0
+exit
+
+
+------------------------------------------------------------------------------------------------------------------------------------------------------#
+
+Configure DHCP for the vlans 
+
+inter vlan routing must be complete before dhcp can be set up
+
+Router(config)#service dhcp
+Router(config)#
+Router(config)#
+Router(config)#ip dhcp pool Staff-Lab-Pool
+Router(dhcp-config)#network 192.168.9.0 255.255.255.0
+Router(dhcp-config)#default-router 192.168.9.1
+Router(dhcp-config)#dns-server 192.168.9.1
+Router(dhcp-config)#exit
+Router(config)#ip dhcp pool Student-Lab-Pool
+Router(dhcp-config)#network 192.168.10.0 255.255.255.0
+Router(dhcp-config)#default-router 192.168.10.1
+Router(dhcp-config)#dns-server 192.168.10.1
+Router(dhcp-config)#exit
+Router(config)#do wr
+Building configuration...
+[OK]
+
+confirm inter vlan communication with ping
+- Working
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Enable routing protocol to enable devices to communicate across buildings - RIPv2 - Both Routers
+
+Routing Information Protocol
+
+en
+conf t
+router rip
+version 2
+network 192.168.1.0
+onwards
+exit
+do wr
+
+

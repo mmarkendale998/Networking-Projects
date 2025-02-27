@@ -16,6 +16,20 @@ Contains `.pkt` files demonstrating various networking concepts:
 ### 🔹 Notes
 - [Project 1 - Notes](Project%201%20-%20Simple%20Network%20-%20Subnetting%20-%20Notes.txt)
 - [Project 2 - Notes](Project%202%20-%20Small%20Business.txt)
+- [Project 3 - Notes](Project%203%20-%20University%20Network.txt)
+- [Project 4 - University Network.txt](Project%203%20-%20University%20Network.txt)
+- [Project 5 - University Network.txt](Project%203%20-%20University%20Network.txt)
+
+
+### 🔹 Videos
+## Project 3 Videos
+
+- [Project 3 - Confirming Inter VLAN communication via PING.mkv](Project%203%20-%20Confirming%20Inter%20VLAN%20communication%20via%20PING.mkv)
+- [Project 3 - Confirming set up by adding new devices.mkv](Project%203%20-%20Confirming%20set%20up%20by%20adding%20new%20devices.mkv)
+- [Project 3 - Enabled RIPv2 for communication across buildings.mkv](Project%203%20-%20Enabled%20RIPv2%20for%20communication%20across%20buildings.mkv)
+- [Project 3 - Setting up the DHCP pool for a building.mkv](Project%203%20-%20Setting%20up%20the%20DHCP%20pool%20for%20a%20building.mkv)
+
+## Project 4 Videos
 
 
 ## 🚀 How to Use  

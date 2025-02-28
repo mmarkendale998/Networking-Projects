@@ -26,7 +26,7 @@ Each link contains quick videos of different configurations.
 
 ## Project 3 Videos
 
-- [Project 3 University Newtork](Project%203%20-%20University%20Network%20Videos)
+- [Project 3 University Network](Project%203%20-%20University%20Network%20Videos)
 
 ## Project 4 Videos
 
